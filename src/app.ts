@@ -12,6 +12,7 @@ const app = fastify(
     {
         logger: true,
         trustProxy: true,
+        pluginTimeout: 0,
     }
 )
 
