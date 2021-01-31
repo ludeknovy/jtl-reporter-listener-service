@@ -21,7 +21,7 @@ export const testRunSaveData = async (app: fastify.FastifyInstance) => {
         },
         async (request, response) => {
             const jtlDb = MongoUtils.getClient().db("jtl-data")
-            const collection = jtlDb.collection("chunks")
+            const collection = jtlDb.collection("data-chunks")
             try {
                 await collection.insertOne(request.body)
             } catch(ex) {
