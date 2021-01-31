@@ -10,6 +10,8 @@ export const saveDataBodySchema = {
             maxItems: 500,
             items: {
                 type: "object",
+                required: ["timeStamp", "elapsed", "label", "responseCode",
+                    "responseMessage", "success", "bytes", "allThreads", "Latency", "Connect"],
                 properties: {
                     timeStamp: {
                         type: "string",
