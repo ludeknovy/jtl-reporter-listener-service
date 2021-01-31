@@ -13,6 +13,7 @@ const app = fastify(
         logger: true,
         trustProxy: true,
         pluginTimeout: 0,
+        bodyLimit: 3048576,
     }
 )
 
