@@ -5,7 +5,7 @@ export const saveDataBodySchema = {
         dataId: {
             type: "string",
         },
-        measurements: {
+        samples: {
             type: "array",
             maxItems: 500,
             items: {
@@ -14,7 +14,7 @@ export const saveDataBodySchema = {
                     "responseMessage", "success", "bytes", "allThreads", "Latency", "Connect"],
                 properties: {
                     timeStamp: {
-                        type: "string",
+                        type: "number",
                     },
                     elapsed: {
                         type: "number",
@@ -50,11 +50,11 @@ export const saveDataBodySchema = {
                         type: "string",
                     },
                     Connect: {
-                        type: "string",
+                        type: "number",
                     },
                 },
             },
         },
     },
-    required: ["dataId", "measurements"],
+    required: ["dataId", "samples"],
 }
