@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
 import { MongoUtils } from "../../../utils/MongoUtils"
 
-export const testRunSaveData = async (app: fastify.FastifyInstance) => {
+export const logSamples = async (app: fastify.FastifyInstance) => {
     await app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/save-data",
         {
             preValidation: async (request, reply) => {
