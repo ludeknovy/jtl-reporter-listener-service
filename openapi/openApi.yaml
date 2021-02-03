@@ -1,0 +1,102 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "JtlReporter Listener Service"
+basePath: "/v1"
+tags:
+- name: "samples"
+
+
+schemes:
+- "http"
+paths:
+  /api/v1/log-samples:
+    post:
+      tags:
+      - "samples"
+      summary: "Add new samples"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/LogSamples"
+      responses:
+        "400":
+          description: "Invalid input"
+      security:
+      - jwtToken: []
+  
+
+   
+securityDefinitions:
+  jwtToken:
+    type: "apiKey"
+    name: "x-access-token"
+    in: "header"
+  
+definitions:
+  Sample:
+    type: "object"
+    required:
+     - timeStamp
+     - elapsed
+     - label
+     - responseCode
+     - responseMessage
+     - threadName
+     - success
+     - bytes
+     - grpThreads
+     - allThreads
+     - Latency
+     - Hostname
+     - Connect
+    properties:
+      timeStamp:
+        type: "integer"
+      elapsed:
+        type: "integer"
+      label:
+        type: "string"
+      responseCode:
+        type: "integer"
+      responseMessage:
+        type: "string"
+      threadName:
+        type: "string"
+      success:
+        type: "boolean"
+      bytes:
+        type: "integer"
+      grpThreads:
+        type: "integer"
+      allThreads:
+        type: "integer"
+      Latency:
+        type: "integer"
+      Hostname:
+        type: "string"
+      Connect: 
+        type: "integer"
+
+  LogSamples:
+    type: "object"
+    required:
+    - "dataId"
+    - "samples"
+    properties:
+      dataId:
+        type: "string"
+        format: "uuid"
+      samples:
+        type: "array"
+        maxItems: 500
+        items:
+          $ref: "#/definitions/Sample"
+
