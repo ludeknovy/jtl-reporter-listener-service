@@ -3,15 +3,15 @@ info:
   description: ""
   version: "1.0.0"
   title: "JtlReporter Listener Service"
-basePath: "/v1"
+basePath: "/api/v1"
 tags:
-- name: "samples"
+- name: "test-run"
 
 
 schemes:
 - "http"
 paths:
-  /api/v1/log-samples:
+  /test-run/log-samples:
     post:
       tags:
       - "samples"

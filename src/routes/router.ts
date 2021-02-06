@@ -1,6 +1,6 @@
 import * as fastify from "fastify"
-import { samplesRouter } from "./v1/testRun/samplesRouter"
+import { testRunRouter } from "./v1/testRun/testRunRouter"
 
 export default async (app: fastify.FastifyInstance) => {
-    await samplesRouter(app)
+    await testRunRouter(app)
 }
