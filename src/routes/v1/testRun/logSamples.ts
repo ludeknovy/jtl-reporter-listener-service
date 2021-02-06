@@ -5,7 +5,7 @@ import { HttpStatusCode } from "../../../models/HttpStatusCode"
 import { MongoUtils } from "../../../utils/MongoUtils"
 
 export const logSamples = async (app: fastify.FastifyInstance) => {
-    await app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/save-data",
+    await app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
         {
             preValidation: async (request, reply) => {
                 try {
