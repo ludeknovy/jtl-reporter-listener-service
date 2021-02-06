@@ -4,13 +4,15 @@ import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
 import { MongoUtils } from "../../../utils/MongoUtils"
 
+const JWT_TOKEN = process.env.JWT_TOKEN
+
 export const logSamples = async (app: fastify.FastifyInstance) => {
     await app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
         {
             preValidation: async (request, reply) => {
                 try {
-                    const jwtToken = request.headers["x-access-token"]
-                    await jwt.verify(jwtToken, "3nHs5Px4pEtmsxPd")
+                    const token = request.headers["x-access-token"]
+                    await jwt.verify(token, JWT_TOKEN)
                 } catch(error) {
                     reply.code(HttpStatusCode.Forbidden).send()
                 }
