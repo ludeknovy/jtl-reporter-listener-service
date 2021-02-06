@@ -21,6 +21,10 @@ router(app)
 
 export const start = async () => {
     try {
+        if (!process.env.JWT_TOKEN) {
+            console.log("No JWT_TOKEN found, please set JWT_TOKEN env var")
+            process.exit(1)
+        }
         await MongoUtils.connect()
         await app.listen(PORT, "0.0.0.0")
     } catch(err) {
