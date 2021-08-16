@@ -1,9 +1,9 @@
 swagger: "2.0"
 info:
   description: ""
-  version: "1.0.0"
+  version: "2.0.0"
   title: "JtlReporter Listener Service"
-basePath: "/api/v1"
+basePath: "/api/v2"
 tags:
 - name: "test-run"
 
@@ -54,9 +54,9 @@ definitions:
      - bytes
      - grpThreads
      - allThreads
-     - Latency
-     - Hostname
-     - Connect
+     - latency
+     - hostname
+     - connect
     properties:
       timeStamp:
         type: "integer"
@@ -74,24 +74,26 @@ definitions:
         type: "boolean"
       bytes:
         type: "integer"
+      sentBytes:
+        type: "integer"
       grpThreads:
         type: "integer"
       allThreads:
         type: "integer"
-      Latency:
+      latency:
         type: "integer"
-      Hostname:
+      hostname:
         type: "string"
-      Connect: 
+      connect: 
         type: "integer"
 
   LogSamples:
     type: "object"
     required:
-    - "dataId"
+    - "itemId"
     - "samples"
     properties:
-      dataId:
+      itemId:
         type: "string"
         format: "uuid"
       samples:

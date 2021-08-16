@@ -3,7 +3,6 @@ import * as dotenv from "dotenv"
 dotenv.config()
 import fastify from "fastify"
 import router from "./routes/router"
-import { MongoUtils } from "./utils/MongoUtils"
 
 
 const PORT = 6000
@@ -25,7 +24,6 @@ export const start = async () => {
             console.log("No JWT_TOKEN found, please set JWT_TOKEN env var")
             process.exit(1)
         }
-        await MongoUtils.connect()
         await app.listen(PORT, "0.0.0.0")
     } catch(err) {
         console.log(err)
