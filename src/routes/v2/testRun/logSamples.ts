@@ -4,19 +4,20 @@ import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
 import * as pgp from "pg-promise"
 import { db } from "../../../utils/db"
+import { MonitorColumnSet, SamplesColumnSet } from "../../../db/columnSets"
 
 const pg = pgp()
 
 const JWT_TOKEN = process.env.JWT_TOKEN
 
-export const logSamples = async (app: fastify.FastifyInstance) => {
+export const logSamples = (app: fastify.FastifyInstance) => {
   app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
     {
       preValidation: async (request, reply) => {
         try {
           const token = request.headers["x-access-token"]
           await jwt.verify(token, JWT_TOKEN)
-        } catch (error) {
+        } catch(error) {
           reply.code(HttpStatusCode.Forbidden).send()
         }
       },
@@ -26,53 +27,14 @@ export const logSamples = async (app: fastify.FastifyInstance) => {
     },
     async (request, response) => {
       try {
-        const columnSet = new pg.helpers.ColumnSet([
-          "elapsed", "success", "bytes", "label",
-          {
-            name: "timestamp",
-            prop: "timeStamp",
-          },
-          {
-            name: "sent_bytes",
-            prop: "sentBytes",
-            def: null,
-          },
-          {
-            name: "connect",
-            prop: "connect",
-          }, {
-            name: "hostname",
-            prop: "hostname",
-            def: null,
-          }, {
-            name: "status_code",
-            prop: "responseCode",
-          },
-          {
-            name: "all_threads",
-            prop: "allThreads",
-          },
-          {
-            name: "grp_threads",
-            prop: "grpThreads",
-          }, {
-            name: "latency",
-            prop: "latency",
-          },
-          {
-            name: "response_message",
-            prop: "responseMessage",
-          },
-          {
-            name: "item_id",
-            prop: "itemId",
-          },
-          {
-            name: "sut_hostname",
-            prop: "sutHostname",
-            def: null,
-          },
-        ], { table: new pg.helpers.TableName({ table: "samples", schema: "jtl" }) })
+
+        const monitorDataToBeSaved: TranformedMonitor[] = request.body.monitor?.map((monitor) => {
+          const transformedMonitor = Object.assign(monitor, {
+            timestamp: new Date(monitor.timestamp),
+            itemId: request.body.itemId,
+          })
+          return transformedMonitor
+        })
 
         const dataToBeSaved: SamplesDataInsert[] = request.body.samples.map((sample) => {
           const sampleCopy = Object.assign({}, sample)
@@ -80,9 +42,12 @@ export const logSamples = async (app: fastify.FastifyInstance) => {
             { timeStamp: new Date(sampleCopy.timeStamp) })
           return Object.assign(transformedSample, { itemId: request.body.itemId })
         })
-
-        const query = pg.helpers.insert(dataToBeSaved, columnSet)
+        const query = pg.helpers.insert(dataToBeSaved, SamplesColumnSet)
         await db.none(query)
+        if (Array.isArray(monitorDataToBeSaved) && monitorDataToBeSaved.length > 0) {
+          const monitorQuery = pg.helpers.insert(monitorDataToBeSaved, MonitorColumnSet)
+          await db.none(monitorQuery)
+        }
       } catch (ex) {
         request.log.error(ex)
         return response.code(HttpStatusCode.ServerError).send(`Error while saving data to the DB`)
@@ -94,6 +59,7 @@ export const logSamples = async (app: fastify.FastifyInstance) => {
 interface SaveDataRequestBody {
   itemId: string
   samples: SamplesRequestBody[]
+  monitor?: MonitorRequestBody[]
 }
 
 interface SamplesRequestBody {
@@ -125,3 +91,12 @@ interface SaveDataHeaders {
   "x-access-token": string
 }
 
+interface MonitorRequestBody {
+  cpu: number
+  name: string
+  timestamp: number
+}
+
+interface TranformedMonitor extends Omit<MonitorRequestBody, "timestamp"> {
+  timestamp: Date
+}
