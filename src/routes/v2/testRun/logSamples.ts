@@ -10,7 +10,7 @@ const pg = pgp()
 
 const JWT_TOKEN = process.env.JWT_TOKEN
 
-export const logSamples = (app: fastify.FastifyInstance) => {
+export const logSamples = async (app: fastify.FastifyInstance) => {
   app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
     {
       preValidation: async (request, reply) => {
