@@ -48,7 +48,7 @@ export const logSamples = (app: fastify.FastifyInstance) => {
           const monitorQuery = pg.helpers.insert(monitorDataToBeSaved, MonitorColumnSet)
           await db.none(monitorQuery)
         }
-      } catch (ex) {
+      } catch(ex) {
         request.log.error(ex)
         return response.code(HttpStatusCode.ServerError).send(`Error while saving data to the DB`)
       }
