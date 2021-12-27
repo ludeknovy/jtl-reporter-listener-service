@@ -10,6 +10,7 @@ const pg = pgp()
 
 const JWT_TOKEN = process.env.JWT_TOKEN
 
+// eslint-disable-next-line require-await
 export const logSamples = async (app: fastify.FastifyInstance) => {
   app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
     {
