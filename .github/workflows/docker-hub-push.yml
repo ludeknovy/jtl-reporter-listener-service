@@ -1,9 +1,8 @@
-name: Publish Docker image on v2 push
+name: Publish Docker image on new release
 
 on:
-  push:
-    branches:
-      - 'feature/v2'
+  release:
+    types: [published]
 
 jobs:
   push_to_registry:
@@ -30,5 +29,5 @@ jobs:
         with:
           context: .
           push: true
-          labels: novyl/jtl-reporter-listener-service:v2-edge
-          tags: novyl/jtl-reporter-listener-service:v2-edge
+          labels: novyl/jtl-reporter-listener-service:${{ github.event.release.tag_name }}
+          tags: novyl/jtl-reporter-listener-service:${{ github.event.release.tag_name }}
