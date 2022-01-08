@@ -4,7 +4,7 @@ WORKDIR /src/worker
 
 COPY package.json package-lock.json  ./
 
-RUN npm install
+RUN npm ci --production
 
 COPY tsconfig.json ./
 
