@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^14.14.22",
     "boom": "^7.3.0",
     "dotenv": "^8.2.0",
     "fastify": "^3.10.1",
@@ -23,7 +24,6 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/node": "^14.14.22",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
     "@typescript-eslint/parser": "^4.14.0",
     "eslint": "^7.18.0",

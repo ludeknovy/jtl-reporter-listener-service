@@ -2,6 +2,8 @@ FROM node:14.15.4-alpine3.10
 
 WORKDIR /src/worker
 
+RUN npm install typescript -g
+
 COPY package.json package-lock.json  ./
 
 RUN npm ci --production
