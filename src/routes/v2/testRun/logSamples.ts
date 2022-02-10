@@ -77,6 +77,7 @@ interface SamplesRequestBody {
   Latency?: number
   Hostname?: string
   Connect?: number
+  failureMessage: string
 }
 
 interface SamplesDataInsert extends TransformedSample {
