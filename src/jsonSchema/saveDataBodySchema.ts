@@ -116,6 +116,9 @@ export const saveDataBodySchemav2 = {
                     connect: {
                         type: "number",
                     },
+                    failureMessage: {
+                        type: "string",
+                    },
                 },
             },
         },

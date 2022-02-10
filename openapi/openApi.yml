@@ -86,6 +86,8 @@ definitions:
         type: "string"
       connect: 
         type: "integer"
+      failureMessage:
+        type: "string"
 
   LogSamples:
     type: "object"
