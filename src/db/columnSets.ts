@@ -47,6 +47,11 @@ export const SamplesColumnSet = new pg.helpers.ColumnSet([
     prop: "sutHostname",
     def: null,
   },
+  {
+    name: "failure_message",
+    prop: "failureMessage",
+    def: null,
+  },
 ], { table: new pg.helpers.TableName({ table: "samples", schema: "jtl" }) })
 
 export const MonitorColumnSet = new pg.helpers.ColumnSet([
