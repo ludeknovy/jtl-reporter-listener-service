@@ -84,7 +84,7 @@ export const saveDataBodySchemav2 = {
                         type: "string",
                     },
                     responseCode: {
-                        type: "string",
+                        type: "number",
                     },
                     responseMessage: {
                         type: "string",
