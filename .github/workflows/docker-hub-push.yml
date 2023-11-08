@@ -29,5 +29,6 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64
           labels: novyl/jtl-reporter-listener-service:${{ github.event.release.tag_name }}
           tags: novyl/jtl-reporter-listener-service:${{ github.event.release.tag_name }}
