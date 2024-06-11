@@ -95,6 +95,7 @@ interface SaveDataHeaders {
 
 interface MonitorRequestBody {
   cpu: number
+  mem?: number
   name: string
   timestamp: number
 }

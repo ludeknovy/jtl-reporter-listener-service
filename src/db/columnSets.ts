@@ -55,7 +55,7 @@ export const SamplesColumnSet = new pg.helpers.ColumnSet([
 ], { table: new pg.helpers.TableName({ table: "samples", schema: "jtl" }) })
 
 export const MonitorColumnSet = new pg.helpers.ColumnSet([
-  "timestamp", "name", "cpu", {
+  "timestamp", "name", "cpu", "mem", {
     name: "item_id",
     prop: "itemId",
   },
