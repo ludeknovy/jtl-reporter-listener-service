@@ -60,3 +60,10 @@ export const MonitorColumnSet = new pg.helpers.ColumnSet([
     prop: "itemId",
   },
 ], { table: new pg.helpers.TableName({ table: "monitor", schema: "jtl" }) })
+
+export const MonitorColumnSetV4 = new pg.helpers.ColumnSet([
+  "timestamp", "name", "cpu", "mem", {
+    name: "item_id",
+    prop: "itemId",
+  },
+], { table: new pg.helpers.TableName({ table: "monitor", schema: "jtl" }) })
