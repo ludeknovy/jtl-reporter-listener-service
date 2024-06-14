@@ -1,17 +1,17 @@
 import * as fastify from "fastify"
-import { saveDataBodySchemav2 } from "../../../jsonSchema/saveDataBodySchema"
+import { saveDataBodySchemaV4 } from "../../../jsonSchema/saveDataBodySchema"
 import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
 import * as pgp from "pg-promise"
 import { db } from "../../../utils/db"
-import { MonitorColumnSet, SamplesColumnSet } from "../../../db/columnSets"
+import { MonitorColumnSetV4, SamplesColumnSet } from "../../../db/columnSets"
 
 const pg = pgp()
 
 const JWT_TOKEN = process.env.JWT_TOKEN
 
 // eslint-disable-next-line require-await
-export const logSamples = async (app: fastify.FastifyInstance) => {
+export const logSamplesV4 = async (app: fastify.FastifyInstance): Promise<void> => {
   app.post<{ Body: SaveDataRequestBody; Headers: SaveDataHeaders }>("/log-samples",
     {
       preValidation: async (request, reply) => {
@@ -23,13 +23,13 @@ export const logSamples = async (app: fastify.FastifyInstance) => {
         }
       },
       schema: {
-        body: saveDataBodySchemav2,
+        body: saveDataBodySchemaV4,
       },
     },
     async (request, response) => {
       try {
 
-        const monitorDataToBeSaved: TranformedMonitor[] = request.body.monitor?.map((monitor) => {
+        const monitorDataToBeSaved: TransformedMonitor[] = request.body.monitor?.map((monitor) => {
           const transformedMonitor = Object.assign(monitor, {
             timestamp: new Date(monitor.timestamp),
             itemId: request.body.itemId,
@@ -46,7 +46,7 @@ export const logSamples = async (app: fastify.FastifyInstance) => {
         const query = pg.helpers.insert(dataToBeSaved, SamplesColumnSet)
         await db.none(query)
         if (Array.isArray(monitorDataToBeSaved) && monitorDataToBeSaved.length > 0) {
-          const monitorQuery = pg.helpers.insert(monitorDataToBeSaved, MonitorColumnSet)
+          const monitorQuery = pg.helpers.insert(monitorDataToBeSaved, MonitorColumnSetV4)
           await db.none(monitorQuery)
         }
       } catch(ex) {
@@ -95,10 +95,11 @@ interface SaveDataHeaders {
 
 interface MonitorRequestBody {
   cpu: number
+  mem: number
   name: string
   timestamp: number
 }
 
-interface TranformedMonitor extends Omit<MonitorRequestBody, "timestamp"> {
+interface TransformedMonitor extends Omit<MonitorRequestBody, "timestamp"> {
   timestamp: Date
 }

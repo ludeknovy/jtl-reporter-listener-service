@@ -29,7 +29,7 @@ export const logSamplesV3 = async (app: fastify.FastifyInstance): Promise<void> 
     async (request, response) => {
       try {
 
-        const monitorDataToBeSaved: TranformedMonitor[] = request.body.monitor?.map((monitor) => {
+        const monitorDataToBeSaved: TransformedMonitor[] = request.body.monitor?.map((monitor) => {
           const transformedMonitor = Object.assign(monitor, {
             timestamp: new Date(monitor.timestamp),
             itemId: request.body.itemId,
@@ -99,6 +99,6 @@ interface MonitorRequestBody {
   timestamp: number
 }
 
-interface TranformedMonitor extends Omit<MonitorRequestBody, "timestamp"> {
+interface TransformedMonitor extends Omit<MonitorRequestBody, "timestamp"> {
   timestamp: Date
 }
