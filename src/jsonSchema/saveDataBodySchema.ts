@@ -130,7 +130,7 @@ export const saveDataBodySchemaV4 = {
         },
         monitor: {
             type: "array",
-            maxItems: 100,
+            maxItems: 500,
             items: {
                 type: "object",
                 required: ["timestamp", "name", "cpu", "mem"],
