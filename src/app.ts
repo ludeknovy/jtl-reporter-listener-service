@@ -24,7 +24,7 @@ export const start = async () => {
             console.log("No JWT_TOKEN found, please set JWT_TOKEN env var")
             process.exit(1)
         }
-        await app.listen(PORT, "0.0.0.0")
+        await app.listen({ port: PORT, host: "0.0.0.0" })
     } catch(err) {
         console.log(err)
         process.exit(1)

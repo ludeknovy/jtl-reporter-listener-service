@@ -1,4 +1,4 @@
-import * as pg from "pg-promise"
+import pg from "pg-promise"
 import * as dotenv from "dotenv"
 
 dotenv.config()

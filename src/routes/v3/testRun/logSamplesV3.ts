@@ -2,7 +2,7 @@ import * as fastify from "fastify"
 import { saveDataBodySchemav3 } from "../../../jsonSchema/saveDataBodySchema"
 import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
-import * as pgp from "pg-promise"
+import pgp from "pg-promise"
 import { db } from "../../../utils/db"
 import { MonitorColumnSet, SamplesColumnSet } from "../../../db/columnSets"
 
