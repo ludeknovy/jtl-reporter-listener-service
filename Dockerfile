@@ -1,4 +1,4 @@
-FROM node:20.17.0-alpine3.20
+FROM node:24-alpine
 
 WORKDIR /src/worker
 

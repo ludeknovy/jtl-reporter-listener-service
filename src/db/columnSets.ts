@@ -1,4 +1,4 @@
-import * as pgp from "pg-promise"
+import pgp from "pg-promise"
 const pg = pgp()
 
 export const SamplesColumnSet = new pg.helpers.ColumnSet([

@@ -2,7 +2,7 @@ import * as fastify from "fastify"
 import { saveDataBodySchemav3 } from "../../../jsonSchema/saveDataBodySchema"
 import * as jwt from "jsonwebtoken"
 import { HttpStatusCode } from "../../../models/HttpStatusCode"
-import * as pgp from "pg-promise"
+import pgp from "pg-promise"
 import { db } from "../../../utils/db"
 import { MonitorColumnSet, SamplesColumnSet } from "../../../db/columnSets"
 
@@ -17,9 +17,9 @@ export const logSamplesV3 = async (app: fastify.FastifyInstance): Promise<void> 
       preValidation: async (request, reply) => {
         try {
           const token = request.headers["x-access-token"]
-          await jwt.verify(token, JWT_TOKEN)
+            jwt.verify(token, JWT_TOKEN)
         } catch(error) {
-          reply.code(HttpStatusCode.Forbidden).send()
+          await reply.code(HttpStatusCode.Forbidden).send()
         }
       },
       schema: {
