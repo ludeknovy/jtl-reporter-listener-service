@@ -17,9 +17,9 @@ export const logSamplesV3 = async (app: fastify.FastifyInstance): Promise<void> 
       preValidation: async (request, reply) => {
         try {
           const token = request.headers["x-access-token"]
-          await jwt.verify(token, JWT_TOKEN)
+            jwt.verify(token, JWT_TOKEN)
         } catch(error) {
-          reply.code(HttpStatusCode.Forbidden).send()
+          await reply.code(HttpStatusCode.Forbidden).send()
         }
       },
       schema: {
